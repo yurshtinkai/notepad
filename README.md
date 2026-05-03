@@ -2,6 +2,16 @@
 
 A modern, secure note-taking application built with React, TypeScript, and Firebase.
 
+
+## 🚀 Live Demo
+https://modernotepad.vercel.app
+
+## 📸 Screenshots
+
+| Login Page | Dashboard | Profile Modal |
+| :---: | :---: | :---: |
+| ![Login Page](public/notepad1.png) | ![Dashboard](public/notepad2.png) | ![Profile Modal](public/notepad3.png)|
+
 ## Features
 
 - 🔐 **Secure Authentication** - Email/Password and Google Sign-In
