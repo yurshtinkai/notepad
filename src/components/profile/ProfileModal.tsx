@@ -157,16 +157,22 @@ const ProfileModal: React.FC<ProfileModalProps> = ({ isOpen, onClose, userName, 
                     const confirm = (document.getElementById('confirmPassword') as HTMLInputElement).value;
                     if (!current || !next || !confirm) { alert('Please fill in all fields'); return; }
                     if (next !== confirm) { alert('New passwords do not match'); return; }
-                    if (next.length < 8) { alert('Password must be at least 8 characters'); return; }
+                    if (next.length < 6) { alert('Password must be at least 6 characters'); return; }
                     try {
-                      const mod = await import('../../services/api');
-                      await mod.changePassword({ currentPassword: current, newPassword: next });
+                      const { changeUserPassword } = await import('../../services/firebaseAuth');
+                      await changeUserPassword(current, next);
                       alert('Password updated successfully');
                       (document.getElementById('currentPassword') as HTMLInputElement).value='';
                       (document.getElementById('newPassword') as HTMLInputElement).value='';
                       (document.getElementById('confirmPassword') as HTMLInputElement).value='';
                     } catch (err: any) {
-                      alert(err?.response?.data?.message || 'Failed to update password');
+                      if (err?.code === 'auth/wrong-password') {
+                        alert('Current password is incorrect');
+                      } else if (err?.code === 'auth/weak-password') {
+                        alert('New password is too weak');
+                      } else {
+                        alert(err?.message || 'Failed to update password');
+                      }
                     }
                   }}>
                     <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><rect x="3" y="11" width="18" height="11" rx="2" ry="2" /><circle cx="12" cy="16" r="1" /><path d="M7 11V7a5 5 0 0 1 10 0v4" /></svg>

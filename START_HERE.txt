@@ -1,0 +1,85 @@
+================================================================================
+                    MODERN NOTEPAD - FIREBASE EDITION
+                         INSTALLATION GUIDE
+================================================================================
+
+STEP 1: INSTALL FIREBASE
+-------------------------
+You need to install Firebase first. Choose ONE of these methods:
+
+METHOD A (EASIEST):
+  1. Double-click "install-firebase.bat" in this folder
+  2. Wait for it to finish
+  3. Press any key to close
+
+METHOD B (COMMAND PROMPT):
+  1. Press Windows Key + R
+  2. Type: cmd
+  3. Press Enter
+  4. Type: cd C:\Users\Admin\Desktop\Notepad-project\MODERN-NOTEPAD-FRONTEND
+  5. Press Enter
+  6. Type: npm install firebase
+  7. Press Enter
+  8. Wait for installation to complete
+
+METHOD C (POWERSHELL - REQUIRES ADMIN):
+  1. Right-click PowerShell and "Run as Administrator"
+  2. Type: Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope CurrentUser
+  3. Press Enter and type Y
+  4. Close PowerShell
+  5. Open PowerShell normally (not as admin)
+  6. Type: cd C:\Users\Admin\Desktop\Notepad-project\MODERN-NOTEPAD-FRONTEND
+  7. Press Enter
+  8. Type: npm install firebase
+  9. Press Enter
+
+
+STEP 2: SET UP FIREBASE PROJECT
+--------------------------------
+After Firebase is installed:
+
+  1. Open "QUICK_START.md" for a 5-minute setup guide
+  2. OR open "FIREBASE_SETUP.md" for detailed instructions
+
+
+STEP 3: CREATE .ENV FILE
+-------------------------
+  1. Copy ".env.example" and rename it to ".env"
+  2. Fill in your Firebase configuration values
+  3. Save the file
+
+
+STEP 4: RUN THE APP
+-------------------
+In Command Prompt or PowerShell:
+  1. Type: npm run dev
+  2. Press Enter
+  3. Open browser to: http://localhost:5173
+
+
+================================================================================
+                              QUICK LINKS
+================================================================================
+
+QUICK_START.md          - 5-minute setup guide
+FIREBASE_SETUP.md       - Detailed Firebase configuration
+INSTALL_FIREBASE.md     - Troubleshooting installation
+README.md               - Full project documentation
+MIGRATION_SUMMARY.md    - What changed from old version
+
+================================================================================
+                           NEED HELP?
+================================================================================
+
+If you see errors:
+  1. Check INSTALL_FIREBASE.md
+  2. Make sure Firebase is installed (npm list firebase)
+  3. Make sure .env file exists with correct values
+  4. Check that you're in the MODERN-NOTEPAD-FRONTEND folder
+
+Common Issues:
+  - "Cannot resolve firebase" = Firebase not installed (see STEP 1)
+  - "Missing environment variables" = Need to create .env file (see STEP 3)
+  - "Permission denied" = Need to set up Firestore rules (see FIREBASE_SETUP.md)
+
+================================================================================

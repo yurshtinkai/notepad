@@ -2,8 +2,7 @@
 import React, { useState, useEffect, useMemo } from 'react';
 import { useAuth } from '../hooks/useAuth';
 import type { Note } from '../types';
-import * as api from '../services/api';
-import { syncService } from '../services/syncService';
+import * as firebaseNotes from '../services/firebaseNotes';
 import { NotesSidebar } from '../components/notes/NotesSidebar';
 import { NoteEditor } from '../components/notes/NoteEditor';
 import { EmptyState } from '../components/notes/EmptyState';
@@ -56,6 +55,9 @@ const DashboardPage: React.FC = () => {
   const [isMobile, setIsMobile] = useState(window.innerWidth <= 768);
   const [isMobileSidebarOpen, setIsMobileSidebarOpen] = useState(window.innerWidth <= 768);
 
+  // Get current user ID
+  const userId = user?.id || '';
+
   // Handle window resize for mobile detection
   useEffect(() => {
     const handleResize = () => {
@@ -75,26 +77,28 @@ const DashboardPage: React.FC = () => {
 
   // Subscribe to online/offline status
   useEffect(() => {
-    const unsubscribe = syncService.onStatusChange((online) => {
-      setIsOnline(online);
-      if (online) {
-        // When coming back online, sync and refresh notes
-        syncService.sync().then(() => {
-          fetchNotes();
-        });
-      }
-    });
-
-    return unsubscribe;
+    const handleOnline = () => setIsOnline(true);
+    const handleOffline = () => setIsOnline(false);
+    
+    window.addEventListener('online', handleOnline);
+    window.addEventListener('offline', handleOffline);
+    
+    return () => {
+      window.removeEventListener('online', handleOnline);
+      window.removeEventListener('offline', handleOffline);
+    };
   }, []);
 
-  // Fetch notes (works offline too)
+  // Fetch notes from Firebase
   const fetchNotes = async () => {
+    if (!userId) return;
+    
     try {
       setIsLoading(true);
-      const allNotes = await syncService.getAllNotes();
-      setNotes(allNotes.sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()));
+      const allNotes = await firebaseNotes.getUserNotes(userId);
+      setNotes(allNotes);
     } catch (err) {
+      console.error('Failed to fetch notes:', err);
       setError('Failed to fetch notes.');
     } finally {
       setIsLoading(false);
@@ -103,48 +107,40 @@ const DashboardPage: React.FC = () => {
 
   // Fetch initial notes
   useEffect(() => {
-    fetchNotes();
-  }, []);
+    if (userId) {
+      fetchNotes();
+    }
+  }, [userId]);
 
   // Load archived on demand
   const fetchArchived = async () => {
+    if (!userId) return;
+    
     try {
-      const { data } = await api.getArchivedNotes();
-      setArchived(data as any);
+      const archivedNotes = await firebaseNotes.getArchivedNotes(userId);
+      setArchived(archivedNotes);
     } catch (err) {
+      console.error('Failed to fetch archived notes:', err);
       setError('Failed to fetch archived notes.');
     }
   };
 
   // Handler to create a new note
   const handleNewNote = async () => {
+    if (!userId) return;
+    
     try {
-      if (isOnline) {
-        // Online: create on server
-        const { data: newNote } = await api.createNote({
-          title: '',
-          content: '',
-        });
-        setNotes([newNote, ...notes]);
-        setCurrentNoteId(newNote._id);
-      } else {
-        // Offline: create locally
-        const tempId = `offline-${Date.now()}`;
-        const newNote: Note = {
-          _id: tempId,
-          title: '',
-          content: '',
-          createdAt: new Date().toISOString(),
-        };
-        await syncService.saveNoteOffline(newNote);
-        await syncService.queueOperation('create', tempId, { title: '', content: '' });
-        setNotes([newNote, ...notes]);
-        setCurrentNoteId(tempId);
-      }
+      const newNote = await firebaseNotes.createNote(userId, {
+        title: '',
+        content: '',
+      });
+      setNotes([newNote, ...notes]);
+      setCurrentNoteId(newNote._id);
       if (isMobile) {
         setIsMobileSidebarOpen(false);
       }
     } catch (err) {
+      console.error('Failed to create new note:', err);
       setError('Failed to create new note.');
     }
   };
@@ -174,18 +170,18 @@ const DashboardPage: React.FC = () => {
 
   // Handler to delete a note
   const handleDeleteNote = async (id: string) => {
+    if (!userId) return;
+    
     try {
-      await syncService.deleteNote(id);
-
-      // Remove note from local state (handle both offline and resolved ids)
-      const resolvedId = notes.find((note) => note._id === id)?._id || id;
-      const newNotes = notes.filter((note) => note._id !== id && note._id !== resolvedId);
+      await firebaseNotes.deleteNote(id, userId);
+      const newNotes = notes.filter((note) => note._id !== id);
       setNotes(newNotes);
       if (showArchive) {
         fetchArchived();
       }
-      setCurrentNoteId(null); // Go back to empty state
+      setCurrentNoteId(null);
     } catch (err) {
+      console.error('Failed to delete note:', err);
       setError('Failed to delete note.');
     }
   };
@@ -196,30 +192,11 @@ const DashboardPage: React.FC = () => {
     data: { title: string; content: string }
   ) => {
     try {
-      if (isOnline) {
-        // Online: update on server
-        const { data: updatedNote } = await api.updateNote(id, data);
-        const newNotes = notes.map((n) => (n._id === id ? updatedNote : n));
-        setNotes(newNotes.sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()));
-      } else {
-        // Offline: save locally and queue for sync
-        const currentNote = notes.find(n => n._id === id);
-        if (currentNote) {
-          const updatedNote: Note = {
-            ...currentNote,
-            ...data,
-            lastModified: Date.now(),
-            isOffline: true,
-          };
-          await syncService.saveNoteOffline(updatedNote);
-          await syncService.queueOperation('update', id, data);
-          
-          // Update local state
-          const newNotes = notes.map((n) => (n._id === id ? updatedNote : n));
-          setNotes(newNotes.sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()));
-        }
-      }
+      const updatedNote = await firebaseNotes.updateNote(id, data);
+      const newNotes = notes.map((n) => (n._id === id ? updatedNote : n));
+      setNotes(newNotes);
     } catch (err) {
+      console.error('Failed to save note:', err);
       setError('Failed to save note.');
     }
   };
@@ -481,10 +458,11 @@ const DashboardPage: React.FC = () => {
                   if (!pendingArchiveDelete) return;
                   setIsDeletingArchived(true);
                   try {
-                    await api.deleteArchivedNote(pendingArchiveDelete);
+                    await firebaseNotes.deleteArchivedNote(pendingArchiveDelete);
                     await fetchArchived();
                     setPendingArchiveDelete(null);
                   } catch (err) {
+                    console.error('Failed to delete archived note:', err);
                     setError('Failed to permanently delete archived note.');
                   } finally {
                     setIsDeletingArchived(false);

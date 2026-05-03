@@ -1,8 +1,8 @@
 // src/types.ts
 
-// User data received from the API
+// User data received from Firebase
 export interface User {
-  id: number; // Changed to number to match MySQL INT
+  id: string; // Firebase uses string UIDs
   username: string;
 }
 

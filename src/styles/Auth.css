@@ -1,7 +1,7 @@
 .auth-split-container {
   width: 100%;
   max-width: 1000px;
-  min-height: 600px;
+  min-height: 480px;
   background: rgba(255, 255, 255, 0.98);
   backdrop-filter: blur(20px);
   border-radius: 24px;
@@ -18,7 +18,7 @@
 .auth-left {
   flex: 1;
   background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-  padding: 60px 40px;
+  padding: 40px 40px;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -140,7 +140,7 @@ body::after {
 
 .auth-right {
   flex: 1;
-  padding: 60px 50px;
+  padding: 40px 50px;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -151,22 +151,22 @@ body::after {
 
 .login-header {
   text-align: center;
-  margin-bottom: 40px;
+  margin-bottom: 24px;
   width: 100%;
   max-width: 400px;
 }
 
 .login-title {
-  font-size: 32px;
+  font-size: 28px;
   font-weight: 700;
   color: #1e293b;
-  margin: 0 0 8px 0;
+  margin: 0 0 6px 0;
   letter-spacing: -0.5px;
   text-align: center;
 }
 
 .login-subtitle {
-  font-size: 16px;
+  font-size: 14px;
   color: #64748b;
   margin: 0;
   text-align: center;
@@ -188,7 +188,7 @@ body::after {
 .auth-subtitle {
   font-size: 16px;
   color: #6b7280;
-  margin: 0 0 32px 0;
+  margin: 0 0 28px 0;
 }
 
 .demo-notice {
@@ -203,7 +203,7 @@ body::after {
 
 /* Update existing auth form styles */
 .form-group {
-  margin-bottom: 24px;
+  margin-bottom: 16px;
 }
 
 .form-group label {
@@ -220,7 +220,7 @@ body::after {
 
 .input-wrapper input {
   width: 100%;
-  padding: 12px 16px 12px 44px;
+  padding: 10px 16px 10px 44px;
   border: 1px solid #e5e7eb;
   border-radius: 12px;
   font-size: 16px;
@@ -251,7 +251,7 @@ body::after {
 
 .btn {
   width: 100%;
-  padding: 12px 24px;
+  padding: 10px 24px;
   background: #6366f1;
   color: white;
   border: none;
@@ -279,7 +279,7 @@ body::after {
 
 .auth-link {
   text-align: center;
-  margin-top: 24px;
+  margin-top: 20px;
   color: #6b7280;
   font-size: 14px;
 }
