@@ -1,7 +1,8 @@
 .auth-split-container {
   width: 100%;
   max-width: 1000px;
-  min-height: 480px;
+  height: 450px;
+  max-height: 85vh;
   background: rgba(255, 255, 255, 0.98);
   backdrop-filter: blur(20px);
   border-radius: 24px;
@@ -9,7 +10,7 @@
   gap: 32px;
   position: relative;
   z-index: 10;
-  box-shadow: 
+  box-shadow:
     0 25px 50px -12px rgba(0, 0, 0, 0.25),
     0 0 0 1px rgba(255, 255, 255, 0.1);
   overflow: hidden;
@@ -18,7 +19,7 @@
 .auth-left {
   flex: 1;
   background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-  padding: 40px 40px;
+  padding: 24px;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -59,7 +60,7 @@ body::before {
   left: 0;
   width: 100%;
   height: 100%;
-  background: 
+  background:
     radial-gradient(circle at 20% 80%, rgba(120, 119, 198, 0.3) 0%, transparent 50%),
     radial-gradient(circle at 80% 20%, rgba(255, 255, 255, 0.15) 0%, transparent 50%),
     radial-gradient(circle at 40% 40%, rgba(120, 119, 198, 0.2) 0%, transparent 50%);
@@ -73,16 +74,16 @@ body::after {
   left: 0;
   width: 100%;
   height: 100%;
-  background-image: 
+  background-image:
     url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="smallGrid" width="8" height="8" patternUnits="userSpaceOnUse"><path d="M 8 0 L 0 0 0 8" fill="none" stroke="rgba(255,255,255,0.03)" stroke-width="0.5"/></pattern></defs><rect width="100" height="100" fill="url(%23smallGrid)"/></svg>');
   z-index: -1;
   animation: backgroundMove 30s ease-in-out infinite;
 }
 
 .main-logo {
-  width: 120px;
-  height: 120px;
-  margin: 0 auto 32px;
+  width: 100px;
+  height: 100px;
+  margin: 0 auto 20px;
   background: rgba(255, 255, 255, 0.1);
   border-radius: 32px;
   display: flex;
@@ -98,9 +99,9 @@ body::after {
 }
 
 .logo-title {
-  font-size: 36px;
+  font-size: 32px;
   font-weight: 800;
-  margin: 0 0 16px 0;
+  margin: 0 0 12px 0;
   text-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
   letter-spacing: -0.5px;
   position: relative;
@@ -122,7 +123,7 @@ body::after {
 .feature-list {
   display: flex;
   flex-direction: column;
-  gap: 20px;
+  gap: 16px;
 }
 
 .feature-item {
@@ -140,7 +141,7 @@ body::after {
 
 .auth-right {
   flex: 1;
-  padding: 40px 50px;
+  padding: 24px 32px;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -151,7 +152,7 @@ body::after {
 
 .login-header {
   text-align: center;
-  margin-bottom: 24px;
+  margin-bottom: 20px;
   width: 100%;
   max-width: 400px;
 }
@@ -203,7 +204,7 @@ body::after {
 
 /* Update existing auth form styles */
 .form-group {
-  margin-bottom: 16px;
+  margin-bottom: 12px;
 }
 
 .form-group label {
@@ -279,7 +280,7 @@ body::after {
 
 .auth-link {
   text-align: center;
-  margin-top: 20px;
+  margin-top: 16px;
   color: #6b7280;
   font-size: 14px;
 }
@@ -317,7 +318,7 @@ body::after {
   left: 10%;
   width: 60px;
   height: 60px;
-  background: linear-gradient(45deg, #fff, rgba(255,255,255,0.5));
+  background: linear-gradient(45deg, #fff, rgba(255, 255, 255, 0.5));
   border-radius: 50%;
   animation-delay: 0s;
 }
@@ -327,7 +328,7 @@ body::after {
   right: 15%;
   width: 40px;
   height: 40px;
-  background: linear-gradient(45deg, #fff, rgba(255,255,255,0.3));
+  background: linear-gradient(45deg, #fff, rgba(255, 255, 255, 0.3));
   transform: rotate(45deg);
   animation-delay: -5s;
 }
@@ -337,7 +338,7 @@ body::after {
   left: 20%;
   width: 80px;
   height: 80px;
-  background: linear-gradient(45deg, rgba(255,255,255,0.2), transparent);
+  background: linear-gradient(45deg, rgba(255, 255, 255, 0.2), transparent);
   border-radius: 20px;
   animation-delay: -10s;
 }
@@ -347,7 +348,7 @@ body::after {
   right: 10%;
   width: 50px;
   height: 50px;
-  background: linear-gradient(45deg, #fff, rgba(255,255,255,0.4));
+  background: linear-gradient(45deg, #fff, rgba(255, 255, 255, 0.4));
   border-radius: 50%;
   animation-delay: -15s;
 }
@@ -357,7 +358,7 @@ body::after {
   left: 5%;
   width: 30px;
   height: 30px;
-  background: rgba(255,255,255,0.15);
+  background: rgba(255, 255, 255, 0.15);
   transform: rotate(45deg);
   animation-delay: -7s;
 }
@@ -367,7 +368,7 @@ body::after {
   right: 25%;
   width: 70px;
   height: 70px;
-  background: linear-gradient(45deg, rgba(255,255,255,0.1), transparent);
+  background: linear-gradient(45deg, rgba(255, 255, 255, 0.1), transparent);
   border-radius: 50%;
   animation-delay: -12s;
 }
@@ -392,32 +393,76 @@ body::after {
   animation: particle-float 15s linear infinite;
 }
 
-.particle:nth-child(1) { left: 10%; animation-delay: 0s; }
-.particle:nth-child(2) { left: 20%; animation-delay: -2s; }
-.particle:nth-child(3) { left: 30%; animation-delay: -4s; }
-.particle:nth-child(4) { left: 40%; animation-delay: -6s; }
-.particle:nth-child(5) { left: 50%; animation-delay: -8s; }
-.particle:nth-child(6) { left: 60%; animation-delay: -10s; }
-.particle:nth-child(7) { left: 70%; animation-delay: -12s; }
-.particle:nth-child(8) { left: 80%; animation-delay: -14s; }
-.particle:nth-child(9) { left: 90%; animation-delay: -16s; }
-.particle:nth-child(10) { left: 15%; animation-delay: -18s; }
+.particle:nth-child(1) {
+  left: 10%;
+  animation-delay: 0s;
+}
+
+.particle:nth-child(2) {
+  left: 20%;
+  animation-delay: -2s;
+}
+
+.particle:nth-child(3) {
+  left: 30%;
+  animation-delay: -4s;
+}
+
+.particle:nth-child(4) {
+  left: 40%;
+  animation-delay: -6s;
+}
+
+.particle:nth-child(5) {
+  left: 50%;
+  animation-delay: -8s;
+}
+
+.particle:nth-child(6) {
+  left: 60%;
+  animation-delay: -10s;
+}
+
+.particle:nth-child(7) {
+  left: 70%;
+  animation-delay: -12s;
+}
+
+.particle:nth-child(8) {
+  left: 80%;
+  animation-delay: -14s;
+}
+
+.particle:nth-child(9) {
+  left: 90%;
+  animation-delay: -16s;
+}
+
+.particle:nth-child(10) {
+  left: 15%;
+  animation-delay: -18s;
+}
 
 /* Animations */
 @keyframes float-shapes {
-  0%, 100% { 
+
+  0%,
+  100% {
     transform: translateY(0px) rotate(0deg) scale(1);
     opacity: 0.1;
   }
-  25% { 
+
+  25% {
     transform: translateY(-20px) rotate(90deg) scale(1.1);
     opacity: 0.15;
   }
-  50% { 
+
+  50% {
     transform: translateY(-10px) rotate(180deg) scale(0.9);
     opacity: 0.08;
   }
-  75% { 
+
+  75% {
     transform: translateY(-30px) rotate(270deg) scale(1.05);
     opacity: 0.12;
   }
@@ -428,12 +473,15 @@ body::after {
     transform: translateY(100vh) scale(0);
     opacity: 0;
   }
+
   10% {
     opacity: 1;
   }
+
   90% {
     opacity: 1;
   }
+
   100% {
     transform: translateY(-100px) scale(1);
     opacity: 0;
@@ -441,22 +489,55 @@ body::after {
 }
 
 @keyframes float {
-  0%, 100% { transform: translateY(0px) rotate(0deg); }
-  25% { transform: translateY(-15px) rotate(0.5deg); }
-  50% { transform: translateY(-10px) rotate(-0.5deg); }
-  75% { transform: translateY(-20px) rotate(0.3deg); }
+
+  0%,
+  100% {
+    transform: translateY(0px) rotate(0deg);
+  }
+
+  25% {
+    transform: translateY(-15px) rotate(0.5deg);
+  }
+
+  50% {
+    transform: translateY(-10px) rotate(-0.5deg);
+  }
+
+  75% {
+    transform: translateY(-20px) rotate(0.3deg);
+  }
 }
 
 @keyframes logoFloat {
-  0%, 100% { transform: translateY(0px) scale(1); }
-  50% { transform: translateY(-8px) scale(1.02); }
+
+  0%,
+  100% {
+    transform: translateY(0px) scale(1);
+  }
+
+  50% {
+    transform: translateY(-8px) scale(1.02);
+  }
 }
 
 @keyframes backgroundMove {
-  0%, 100% { transform: translate(0, 0) scale(1); }
-  25% { transform: translate(-2px, -2px) scale(1.01); }
-  50% { transform: translate(2px, -1px) scale(0.99); }
-  75% { transform: translate(-1px, 2px) scale(1.01); }
+
+  0%,
+  100% {
+    transform: translate(0, 0) scale(1);
+  }
+
+  25% {
+    transform: translate(-2px, -2px) scale(1.01);
+  }
+
+  50% {
+    transform: translate(2px, -1px) scale(0.99);
+  }
+
+  75% {
+    transform: translate(-1px, 2px) scale(1.01);
+  }
 }
 
 /* Responsive */
