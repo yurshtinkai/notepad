@@ -52,26 +52,32 @@ export const NoteEditor: React.FC<NoteEditorProps> = ({
   const [content, setContent] = useState(note.content);
   const [lastSaved, setLastSaved] = useState('Never');
 
-  // Update local state when the selected note changes
+  // Update local state when the selected note changes (but not when typing)
   useEffect(() => {
+    // Only update if the note ID changed (user selected a different note)
     setTitle(note.title);
     setContent(note.content);
     setLastSaved(new Date(note.createdAt).toLocaleTimeString());
-  }, [note]);
+  }, [note._id]); // Only depend on note ID, not the entire note object
 
-  // Autosave logic
+  // Autosave logic with debouncing
   useEffect(() => {
+    // Don't save if values haven't changed
+    if (title === note.title && content === note.content) {
+      return;
+    }
+
     const handler = setTimeout(() => {
-      if (!readOnly && (title !== note.title || content !== note.content)) {
+      if (!readOnly) {
         onUpdateNote(note._id, { title, content });
         setLastSaved(new Date().toLocaleTimeString());
       }
-    }, 500); // Autosave after 500ms of inactivity
+    }, 1000); // Increased to 1 second for better performance
 
     return () => {
       clearTimeout(handler);
     };
-  }, [title, content, note, onUpdateNote]);
+  }, [title, content]); // Removed note and onUpdateNote from dependencies
 
   const wordCount = content.trim() ? content.trim().split(/\s+/).length : 0;
 
